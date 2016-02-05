@@ -1,0 +1,97 @@
+{
+	"@type": "CatalogItemRequest",
+	"catalogItemRef": {
+		"id": "d40ab340-0dd4-4cd2-b67a-e991d27671e2",
+		"label": "SYSREF-LINUX_RHEL_7.1.0_N3_vRA"
+	},
+	"organization": {
+		"tenantRef": "##tenantRef##",
+		"tenantLabel": "##tenantLabel##",
+		"subtenantRef": "334be3f3-c8bf-4e06-9813-88aa9ad8c285",
+		"subtenantLabel": "BG_NASA"
+	},
+	"requestedFor": "##USER_REQUESTEDFOR##",
+	"state": "SUBMITTED",
+	"requestNumber": 0,
+	"requestData": {
+		"entries": [
+			{
+				"key": "provider-blueprintId",
+				"value": {
+					"type": "string",
+					"value": "0c084905-2ccc-454b-a3a5-b0679328b40a"
+				}
+			},
+			{
+				"key": "provider-provisioningGroupId",
+				"value": {
+					"type": "string",
+					"value": "334be3f3-c8bf-4e06-9813-88aa9ad8c285"
+				}
+			},
+			{
+				"key": "provider-Cafe.Shim.VirtualMachine.Description",
+				"value": {
+					"type": "string",
+					"value": "##DESCRIPTION##"
+				}
+			},
+			{
+				"key": "provider-Cafe.Shim.VirtualMachine.Reason",
+				"value":
+				{
+					"type": "string",
+					"value": "##REASON##"
+				}
+			},
+			{
+				"key": "provider-Cafe.Shim.VirtualMachine.NumberOfInstances",
+				"value":
+				{
+					"type": "integer",
+					"value": 1
+				}
+			},
+			{
+				"key": "provider-VirtualMachine.CPU.Count",
+				"value":
+				{
+					"type": "integer",
+					"value": ##CPU_COUNT##
+				}
+			},
+			{
+				"key": "provider-__Notes",
+				"value":
+				{
+					"type": "string",
+					"value": "##REASON##"
+				}
+			},
+			{
+				"key": "provider-VirtualMachine.Disk0.Size",
+				"value":
+				{
+					"type": "string",
+					"value": "45"
+				}
+			},
+			{
+				"key": "provider-VirtualMachine.LeaseDays",
+				"value":
+				{
+					"type": "integer",
+					"value": 1
+				}
+			},
+			{
+				"key": "provider-VirtualMachine.Memory.Size",
+				"value":
+				{
+					"type": "integer",
+					"value": ##MEMORY_SIZE##
+				}
+			}
+		]
+	}
+ }
