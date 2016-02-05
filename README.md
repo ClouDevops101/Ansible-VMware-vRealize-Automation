@@ -1,9 +1,9 @@
 vRA-deploy-VM
 =============
 
-Handbrank.sh Command line interface for compressing mkv and mp4 video file to m4v/aac Appletv ios video format
+vRA-deploy-VM is a playbook that use ansible uri core module to request a VM to vRealize automation solution
 
-![HandBrake](https://handbrake.fr/img/logo.png)
+![vRA-deploy-VM](http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png)
 
 
 Handbrake.sh convert mkv to m4v AppleTv format using HandBrakeCli the most powerfull tools to compresse multiple video format.
