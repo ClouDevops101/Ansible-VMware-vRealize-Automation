@@ -2,12 +2,11 @@
 - hosts: localhost
 # Defining used variable
   vars:
-   VRA_HOST: vra-eei.eei.adam.adroot.edf.fr
-   VRA_PROTO: https://
-   VRA_USER: TT06377S
-   VRA_PASS: Thitho@201510
-   VRA_TENANT: vsphere.local
-   USER_REQUESTEDFOR: TT06377S@adam.adroot.edf.fr
+   VRA_HOST: {{ VRA_HOST}}
+   VRA_USER: {{ VRA_USER }}
+   VRA_PASS: {{ VRA_PASS }}
+   VRA_TENANT: {{ VRA_TENANT }}
+   USER_REQUESTEDFOR: {{ VRA_USER }}@{{ VRA_HOST}}
    DESCRIPTION: RHEL7_Docker
    REASON: JenkinsJOB
    CPU_COUNT: 1
@@ -15,20 +14,20 @@
    user_data:
 
   tasks:
- 
-  - uri: 
+
+  - uri:
       url:  https://{{ VRA_HOST }}/identity/api/tokens
       method: POST
-      HEADER_Content-Type: application/json  
-      HEADER_Accept: application/json  
-      body: '{ "username" : "TT06377S", "password" : "Thitho@201510", "tenant" : "vsphere.local" }'
+      HEADER_Content-Type: application/json
+      HEADER_Accept: application/json
+      body: '{ "username" : "{{ VRA_USER }}", "" : "{{ VRA_PASS }}", "" : "{{ VRA_TENANT }}" }'
       validate_certs: no
       return_content: yes
-      HEADER_Content-Type: application/json  
+      HEADER_Content-Type: application/json
     register: token
   #- debug: var=token
 
-# send a inventory request to VERA 
+# send a inventory request to VERA
 
   - uri:
       url: https://{{ VRA_HOST }}/catalog-service/api/consumer/entitledCatalogItems
@@ -57,28 +56,26 @@
 #
 #    Send a request for a new VM
 #
-  - set_fact: body_json="{{ lookup('template','/etc/ansible/roles/deploy.json',convert_data=False)   }}"
+  - set_fact: body_json="{{ lookup('template','deploy.json',convert_data=False)   }}"
 
-  - uri: 
+  - uri:
       url: https://{{ VRA_HOST }}/catalog-service/api/consumer/requests
       method: POST
       HEADER_Accept: application/json
       HEADER_Content-Type: "application/json"
       HEADER_authorization: Bearer {{ token.json['id'] }}
-      #Or  body: "{{ lookup('file','/etc/ansible/roles/template_data.json') }}"
       body: "{{ body_json }}"
       validate_certs: no
       timeout: 30
       status_code: 201
       return_content: yes
     register: result
-#  - debug: var=result
-#
+
+
 # Pause for 5 minutes to build app cache.
   - pause: seconds=250  prompt="Making sur the VM is deployed by vRealize Automation Tool"
 # GET REQUEST ID
-  #- debug: msg="{{ result.location }}"
-# GET URL REQUEST ID 
+
   - uri:
       url: "{{ result.location }}"
       method: GET
@@ -88,20 +85,18 @@
       validate_certs: no
       return_content: yes
     register: list
-#  - debug: var=list
- 
- # - debug: msg="{{ list.json.requestCompletion.completionDetails }}"
-# Get EEI demande in raw mode
-# Do some ninja filter 
-  - set_fact: DemandeEEItofilter="{{ list.json.requestCompletion.completionDetails |  regex_replace ('Request succeeded. Created ', '') }}"
-  #- debug: var=DemandeEEItofilter
-# Store EEI demande in DemandeEEI VAR 
-  - set_fact: DemandeEEI="{{ DemandeEEItofilter |  regex_replace ('\.', '') }}"
+
+# Get VM name  in raw mode
+# Do some ninja filter
+  - set_fact: Demandetofilter="{{ list.json.requestCompletion.completionDetails |  regex_replace ('Request succeeded. Created ', '') }}"
+
+# Store EEI demande in Demande VAR
+  - set_fact: Demande="{{ Demandetofilter |  regex_replace ('\.', '') }}"
   #- debug: var=DemandeEEI
 
 #
 #          Ansible get VM Destroy id and @IP by VMname
-# 
+#
 #
 # send a inventory request to VERA
   - uri:
@@ -116,13 +111,10 @@
 # Looking for VM BY VM_EEI_NUMBER
 
   - set_fact: VM_GLOBAL_EXIST="{{ list.json.metadata.totalElements}}"
-  - set_fact: VM_Destroy_id="{{ list.json.content[item].id }}" VM_EEI="{{ list.json.content[item].name }}"  VM_IP="{{ list.json.content[item].resourceData }}"
+  - set_fact: VM_Destroy_id="{{ list.json.content[item].id }}" VM_name="{{ list.json.content[item].name }}"  VM_IP="{{ list.json.content[item].resourceData }}"
     with_items: [ 0, 1 ,2]
-    when: ( "{{ list.json.content[item].name }}" == "{{ DemandeEEI }}" )
+    when: ( "{{ list.json.content[item].name }}" == "{{ Demande }}" )
   - shell:  echo {{ VM_IP }} | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
     register: IP
   - set_fact: VM_IP="{{ IP.stdout }}"
-  - debug: msg="{{ VM_EEI }} {{ VM_IP }} {{ VM_Destroy_id }}"
- # - copy:
- #   content: "{{ VM_IP }} {{ VM_EEI }} {{ VM_Destroy_id }}" 
- #   dest: "/etc/ansible/roles/deployed_VM_info"
+  - debug: msg="{{ VM_name }} {{ VM_IP }} {{ VM_Destroy_id }}"
