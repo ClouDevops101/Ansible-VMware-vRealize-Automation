@@ -1,23 +1,23 @@
 ---
 - hosts: localhost
-# Defining used variable
+#  Defining used variable
   vars:
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}
    VRA_TENANT: {{ VRA_TENANT }}
    USER_REQUESTEDFOR: {{ VRA_USER }}@{{ VRA_HOST}}
-   DESCRIPTION: RHEL7_Docker
-   REASON: JenkinsJOB
-   CPU_COUNT: 1
-   MEMORY_SIZE: 2024
+   DESCRIPTION: {{ DESCRIPTION }}
+   REASON: {{ REASON }}
+   CPU_COUNT: {{ CPU_COUNT }}
+   MEMORY_SIZE: {{ MEMORY_SIZE }}
    user_data:
 
   tasks:
 
   - uri:
       url:  https://{{ VRA_HOST }}/identity/api/tokens
-      method: POST
+      method: POSTs
       HEADER_Content-Type: application/json
       HEADER_Accept: application/json
       body: '{ "username" : "{{ VRA_USER }}", "" : "{{ VRA_PASS }}", "" : "{{ VRA_TENANT }}" }'
@@ -25,10 +25,7 @@
       return_content: yes
       HEADER_Content-Type: application/json
     register: token
-  #- debug: var=token
-
-# send a inventory request to VERA
-
+#  Send a inventory request to VERA
   - uri:
       url: https://{{ VRA_HOST }}/catalog-service/api/consumer/entitledCatalogItems
       method: GET
@@ -38,7 +35,6 @@
       validate_certs: no
       return_content: yes
     register: list
- # - debug: var=list
 
   - command: "sed -i {{ item }} /etc/ansible/roles/deploy.json"
     with_items:
@@ -53,10 +49,8 @@
     - s/##REASON##/{{ REASON }}/g
     - s/##CPU_COUNT##/{{ CPU_COUNT }}/g
     - s/##MEMORY_SIZE##/{{ MEMORY_SIZE }}/g
-#
-#    Send a request for a new VM
-#
-  - set_fact: body_json="{{ lookup('template','deploy.json',convert_data=False)   }}"
+#  Send a request for a new VM
+  - set_fact: body_json="{{ lookup('template','deploy.json',convert_data=False)}}"
 
   - uri:
       url: https://{{ VRA_HOST }}/catalog-service/api/consumer/requests
@@ -71,11 +65,9 @@
       return_content: yes
     register: result
 
-
 # Pause for 5 minutes to build app cache.
   - pause: seconds=250  prompt="Making sur the VM is deployed by vRealize Automation Tool"
 # GET REQUEST ID
-
   - uri:
       url: "{{ result.location }}"
       method: GET
@@ -85,20 +77,14 @@
       validate_certs: no
       return_content: yes
     register: list
-
 # Get VM name  in raw mode
 # Do some ninja filter
   - set_fact: Demandetofilter="{{ list.json.requestCompletion.completionDetails |  regex_replace ('Request succeeded. Created ', '') }}"
 
-# Store EEI demande in Demande VAR
+# Store VM Name demande
   - set_fact: Demande="{{ Demandetofilter |  regex_replace ('\.', '') }}"
-  #- debug: var=DemandeEEI
-
-#
-#          Ansible get VM Destroy id and @IP by VMname
-#
-#
-# send a inventory request to VERA
+# Ansible get VM Destroy id and @IP by VMname
+# Send a inventory request to vRA
   - uri:
       url: "https://{{ VRA_HOST }}/catalog-service/api/consumer/resources/types/Infrastructure.Machine/?page=Last&limit=3&$"
       method: GET
@@ -108,7 +94,8 @@
       validate_certs: no
       return_content: yes
     register: list
-# Looking for VM BY VM_EEI_NUMBER
+
+# Looking for VM BY VM_NUMBER
 
   - set_fact: VM_GLOBAL_EXIST="{{ list.json.metadata.totalElements}}"
   - set_fact: VM_Destroy_id="{{ list.json.content[item].id }}" VM_name="{{ list.json.content[item].name }}"  VM_IP="{{ list.json.content[item].resourceData }}"
