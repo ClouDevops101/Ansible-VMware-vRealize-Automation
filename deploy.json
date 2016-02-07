@@ -1,14 +1,14 @@
 {
 	"@type": "CatalogItemRequest",
 	"catalogItemRef": {
-		"id": "d40ab340-0dd4-4cd2-b67a-e991d27671e2",
-		"label": "SYSREF-LINUX_RHEL_7.1.0_N3_vRA"
+		"id": "##CATALOG_ITEM_ID##",
+		"label": "##CATALOG_ITEM_LABEL##"
 	},
 	"organization": {
-		"tenantRef": "##tenantRef##",
-		"tenantLabel": "##tenantLabel##",
-		"subtenantRef": "334be3f3-c8bf-4e06-9813-88aa9ad8c285",
-		"subtenantLabel": "BG_NASA"
+		"tenantRef": "##VRA_TENANT##",
+		"tenantLabel": "##VRA_TENANT##",
+		"subtenantRef": "##BG_ID##",
+		"subtenantLabel": "##BG##"
 	},
 	"requestedFor": "##USER_REQUESTEDFOR##",
 	"state": "SUBMITTED",
@@ -19,14 +19,14 @@
 				"key": "provider-blueprintId",
 				"value": {
 					"type": "string",
-					"value": "0c084905-2ccc-454b-a3a5-b0679328b40a"
+					"value": "##BINDING_ID##"
 				}
 			},
 			{
 				"key": "provider-provisioningGroupId",
 				"value": {
 					"type": "string",
-					"value": "334be3f3-c8bf-4e06-9813-88aa9ad8c285"
+					"value": "##BG_ID##"
 				}
 			},
 			{
@@ -65,7 +65,7 @@
 				"value":
 				{
 					"type": "string",
-					"value": "##REASON##"
+					"value": "##DESCRIPTION##"
 				}
 			},
 			{
@@ -81,7 +81,7 @@
 				"value":
 				{
 					"type": "integer",
-					"value": 1
+					"value": ##CPU_COUNT##
 				}
 			},
 			{
