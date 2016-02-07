@@ -1,0 +1,38 @@
+---
+- hosts: localhost
+# Defining used variable
+  vars:
+   VRA_HOST: vra-eei.eei.adam.adroot.edf.fr
+   VRA_PROTO: https://
+   VRA_USER: TT06377S
+   VRA_PASS: Thitho@201510
+   VRA_TENANT: vsphere.local
+   USER_REQUESTEDFOR: TT06377S@adam.adroot.edf.fr
+   DESCRIPTION: RHEL7_Docker
+   REASON: JenkinsJOB
+   CPU_COUNT: 1
+   MEMORY_SIZE: 2048
+   user_data:
+
+  tasks:
+
+
+  - name: Download rpc-repository to this host
+    nexus:
+      nexus=https://noe449gt.adam.adroot.edf.fr:8081/repository/maven-releases
+      extension=jar
+      artifactId=jarfile:stat-backend:2.2
+      http_user=admin
+      http_pass=admin123
+    register: download
+
+#  - name: get statistics jar
+ #   nexus:
+ #     artifactory=http://artifactory.vpro.nl
+ #     artifactId=nl.vpro.stats:stats-backend:0.3-SNAPSHOT
+  #    extension=jar
+
+  - name: Upload rpc-repository
+    copy:
+      src={{download.dest}}
+      dest=/opt/{{file}}

@@ -6,10 +6,10 @@ vRA-deploy-VM is a playbook that use ansible uri core module to request a VM fro
 ![vRA-deploy-VM](http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png)
 
 
-Handbrake.sh convert mkv to m4v AppleTv format using HandBrakeCli the most powerfull tools to compresse multiple video format.
-for more information about Handbrake please visite the official web page :
-[ Handbrake website ](https://trac.handbrake.fr/wiki/CLIGuide)
+vRA-deploy-VM Can be used to make ansible request a VM in order to replace codestream vRA tool
 
+UNDERCONSTUCTION
+================
 This script take 3 argument as input :
 ex :
 
