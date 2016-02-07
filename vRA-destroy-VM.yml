@@ -1,0 +1,87 @@
+---
+- hosts: localhost
+# Defining used variable
+  vars:
+   VRA_HOST: vra-eei.eei.adam.adroot.edf.fr
+   VRA_PROTO: https://
+   VRA_USER: TT06377S
+   VRA_PASS: Thitho@201510
+   VRA_TENANT: vsphere.local
+   USER_REQUESTEDFOR: TT06377S@adam.adroot.edf.fr
+   DESCRIPTION: ProvisionfromJenkins
+   REASON: JenkinsJOB
+   CPU_COUNT: 1
+   MEMORY_SIZE: 2048
+   user_data:
+
+  tasks:
+ 
+  - uri: 
+      url:  https://{{ VRA_HOST }}/identity/api/tokens
+      method: POST
+      HEADER_Content-Type: application/json  
+      HEADER_Accept: application/json  
+      body: '{ "username" : "TT06377S", "password" : "Thitho@201510", "tenant" : "vsphere.local" }'
+      validate_certs: no
+      return_content: yes
+      HEADER_Content-Type: application/json  
+    register: token
+  #- debug: var=token
+  #- debug: msg=" hello this my json var {{ token.json['id'] }}"
+
+# send a inventory request to VERA 
+
+  - uri:
+      url: https://{{ VRA_HOST }}/catalog-service/api/consumer/entitledCatalogItems
+      method: GET
+      HEADER_Content-Type: application/json
+      HEADER_Accept: application/json
+      HEADER_authorization: Bearer {{ token.json['id'] }}
+      validate_certs: no
+      return_content: yes
+    register: list
+  - debug: var=list
+# CATALOG_ITEM_ID
+  #- debug: msg="CATALOG_ITEM_ID={{ list.json.content[0].catalogItem.id }} "
+#CATALOG_ITEM_LABEL
+  #- debug: msg="CATALOG_ITEM_LABEL={{ list.json.content[0].catalogItem.name }} "
+#BG
+  #- debug: msg="BG={{ list.json.content[0].entitledOrganizations[0].subtenantLabel }} "
+#BG_ID
+  #- debug: msg="BG_ID={{ list.json.content[0].entitledOrganizations[0].subtenantRef }} "
+#BINDING_ID
+  #- debug: msg="BINDING_ID={{ list.json.content[0].catalogItem.providerBinding.bindingId }} "
+
+  - command: " sed -i {{ item }} /etc/ansible/roles/destroy.json"
+    with_items:
+    - s/##DESTROY_ID##/{{  DESTROY_ID  }}/g
+#    - s/##CATALOG_ITEM_LABEL##/{{ list.json.content[0].catalogItem.name  }}/g
+#    - s/##USER_REQUESTEDFOR##/{{ USER_REQUESTEDFOR }}/g
+#    - s/##VRA_TENANT##/{{ VRA_TENANT }}/g
+#    - s/##BG##/{{ list.json.content[0].entitledOrganizations[0].subtenantLabel  }}/g
+#    - s/##BG_ID##/{{ list.json.content[0].entitledOrganizations[0].subtenantRef  }}/g
+#    - s/##BINDING_ID##/{{ list.json.content[0].catalogItem.providerBinding.bindingId }}/g
+#    - s/##DESCRIPTION##/{{ DESCRIPTION }}/g 
+#    - s/##REASON##/{{ REASON }}/g
+#    - s/##CPU_COUNT##/{{ CPU_COUNT }}/g
+#    - s/##MEMORY_SIZE##/{{ MEMORY_SIZE }}/g
+
+  - set_fact: body_json="{{ lookup('template','/etc/ansible/roles/destroy.json',convert_data=False)   }}"
+  - debug: var=body_json
+  - uri: 
+      url: https://{{ VRA_HOST }}/catalog-service/api/consumer/requests
+      method: POST
+      HEADER_Accept: application/json
+      HEADER_Content-Type: "application/json"
+      HEADER_authorization: Bearer {{ token.json['id'] }}
+      #Or  body: "{{ lookup('file','/etc/ansible/roles/template_data.json') }}"
+      body: "{{ body_json }}"
+      validate_certs: no
+      timeout: 30
+      status_code: 201
+      return_content: yes
+    register: result
+  - debug: var=result
+
+
+
