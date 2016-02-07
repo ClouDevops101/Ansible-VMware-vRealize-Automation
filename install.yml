@@ -7,13 +7,13 @@
   tasks:
   # Install it if it's an rpm package
    - name: install rpm with yum
-     yum:  name='{{ OI }}' state=present
-     when: '{{ OI | match("^.*.rpm$") }}'
+     yum:  name='{{ Object }}' state=present
+     when: '{{ Object | match("^.*.rpm$") }}'
      register: result_yum
   # Execute it if it's a shekk script
    - name: install a shell script # iOK only if isFirstRun is defined
-     command: /etc/ansible/roles/'{{ OI }}'
-     when: '{{ OI | match("^.*.sh$") }}'
+     command: '{{ Object }}'
+     when: '{{ Object | match("^.*.sh$") }}'
      register: result_shell
 
 
