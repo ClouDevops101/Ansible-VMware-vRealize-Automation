@@ -1,20 +1,17 @@
 ---
-- hosts: localhost
+  - hosts: localhost
   # Defining used variable
   vars:
-   Object: '{{ Object }}'
+    Object: '{{ Object }}'
 
-  tasks:
-  # Install it if it's an rpm package
-   - name: install rpm with yum
-     yum:  name='{{ Object }}' state=present
-     when: '{{ Object | match("^.*.rpm$") }}'
-     register: result_yum
-  # Execute it if it's a shekk script
-   - name: install a shell script # iOK only if isFirstRun is defined
-     command: '{{ Object }}'
-     when: '{{ Object | match("^.*.sh$") }}'
-     register: result_shell
-
-
-   - debug: msg="yum  {{ result_yum }} shell {{ result_shell.stdout }} "
+    tasks:
+      # Install it if it's an rpm package
+          - name: install rpm with yum
+      yum:  name='{{ Object }}' state=present
+      when: '{{ Object | match("^.*.rpm$") }}'
+      register: result_yum
+      # Execute it if it's a shekk script
+      - name: install a shell script # iOK only if isFirstRun is defined
+      command: '{{ Object }}'
+      when: '{{ Object | match("^.*.sh$") }}'
+      register: result_shell - debug: msg="yum  {{ result_yum }} shell {{ result_shell.stdout }} "
