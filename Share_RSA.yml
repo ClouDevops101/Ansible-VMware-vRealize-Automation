@@ -1,6 +1,6 @@
 - hosts: '{{ host }}'
-  remote_user: '{{ user }}'
+remote_user: '{{ user }}'
 
-  tasks:
+tasks:
   - name: Add RSA key to the remote host
-    authorized_key: user='{{ user }}' key="{{ lookup('file', '{{home_user}}/.ssh/id_rsa.pub') }}"
+  authorized_key: user='{{ user }}' key="{{ lookup('file', '{{home_user}}/.ssh/id_rsa.pub') }}"

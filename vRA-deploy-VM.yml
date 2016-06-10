@@ -2,6 +2,8 @@
 - hosts: localhost
 #  Defining used variable
   vars:
+   var_files:
+     - vars.yml
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}

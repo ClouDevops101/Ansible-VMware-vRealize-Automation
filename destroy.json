@@ -1,20 +1,20 @@
 {
 	"@type": "ResourceActionRequest",
 	"resourceRef": {
-	"id": "##DESTROY_ID##"
+		"id": "##DESTROY_ID##"
 	},
 	"resourceActionRef": {
-	"id": "a4fd545b-7e13-4c10-8582-682a7a515486"
+		"id": "a4fd545b-7e13-4c10-8582-682a7a515486"
 	},
 	"organization": {
-	"tenantRef": "##VRA_TENANT##",
-	"tenantLabel": "##VRA_TENANT##",
-	"subtenantRef": "334be3f3-c8bf-4e06-9813-88aa9ad8c285",
-	"subtenantLabel": "##BG##"
+		"tenantRef": "##VRA_TENANT##",
+		"tenantLabel": "##VRA_TENANT##",
+		"subtenantRef": "334be3f3-c8bf-4e06-9813-88aa9ad8c285",
+		"subtenantLabel": "##BG##"
 	},
 	"state": "SUBMITTED",
 	"requestNumber": 0,
 	"requestData": {
-	"entries": []
+		"entries": []
 	}
 }
