@@ -10,5 +10,7 @@ vRA-deploy-VM is a playbook that use ansible uri core module to request a VM fro
 
 vRA-deploy-VM Can be used to make ansible request a VM in order to replace codestream vRA tool
 
-UNDERCONSTUCTION
+HOW TO 
 ================
+
+
