@@ -1,6 +1,7 @@
 <a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a>
 
-[![VMware vRealize Automation](http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png | width=50)](http://bitly.com/2grT54q)
+<a href="http://bitly.com/2grT54q"><img src="http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png" height="24">
+
 
 # Ansible roles for vRealize Automation - VMware vCloud IaaS solution
 
