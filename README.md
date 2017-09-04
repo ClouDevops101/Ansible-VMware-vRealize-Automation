@@ -1,7 +1,7 @@
 <a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a>
 
-Ansible roles for vRealize Automation - VMware vCloud IaaS solution
-=============
+# Ansible roles for vRealize Automation - VMware vCloud IaaS solution
+
 
 Description : vRA-deploy-VM is a playbook that use ansible uri core module to request a VM from vRealize automation solution, the vmware cloud.
 This script is built to be run from a jenkins slave with a minmal installation in order to create an ephemeral deployement machine to deploy test and destroy the machines after testing. 
@@ -23,17 +23,19 @@ As you can see there is two main role file :
 vRA-deploy-VM.yml : This file is used to request a VM to vRealize Automation it will play a full mimed json request to ask ressource from vcloud and then get ip and hostname
 
 Input : 
-   
+   ```
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}
    VRA_TENANT: {{ VRA_TENANT }}
+   ```
 
 Output :
-
+  ```
   VM_Destroy_id="{{ list.json.content[item].id }}" 
   VM_name="{{ list.json.content[item].name }}"  
   VM_IP="{{ list.json.content[item].resourceData }}
+ ```
 
 vRA-destroy-VM.yml : 
 
