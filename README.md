@@ -1,4 +1,4 @@
-<a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a>
+<a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a> ![http://bitly.com/2grT54q](http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png)
 
 # Ansible roles for vRealize Automation - VMware vCloud IaaS solution
 
@@ -21,7 +21,13 @@ requierement : ** A valid vRA account able to create/destroy machines **
 As you can see there is two main role file : 
 
 ## vRA-deploy-VM.yml :
-This file is used to request a VM to vRealize Automation it will play a full mimed json request to ask ressource from vcloud and then get ip and hostname
+This file is used to request a VM to vRealize Automation it will play a full mimed json request to ask ressource from vcloud and then get ip and hostname.
+Please store user and password in a separate yml vault file
+
+### HOW to use it 
+```
+ansible-playbook vRA-deploy-VM.yml --ask-vault-pass 
+```
 
 ###### Input : 
    ```
@@ -40,6 +46,10 @@ This file is used to request a VM to vRealize Automation it will play a full mim
 
 ## vRA-destroy-VM.yml : 
 
+### HOW to use it 
+```
+ansible-playbook vRA-destroy-VM.yml --ask-vault-pass 
+```
 
 ###### Input : 
    ```
