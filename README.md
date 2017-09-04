@@ -1,4 +1,4 @@
-<a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a><a href="http://bitly.com/2grT54q"><img src="http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png" height="60">
+<a href="http://bitly.com/2grT54q"><img src="https://cdn.codementor.io/badges/i_am_a_codementor_dark.svg" alt="I am a codementor" style="max-width:100%"/></a><a href="http://bitly.com/2grT54q"><img src="http://blogs.vmware.com/management/files/2015/02/vRA-Product-Icon-Mac_0.png" height="50">
 
 
 # Ansible roles for vRealize Automation - VMware vCloud IaaS solution
