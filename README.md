@@ -4,7 +4,7 @@
 # Ansible roles for vRealize Automation - VMware vCloud IaaS solution
 
 
-Description : vRA-deploy-VM is a playbook that use ansible uri core module to request a VM from vRealize automation solution, the vmware cloud.
+Description : vRA-deploy-VM is a playbook that use ansible uri core module to request a VM from vRealize automation solution, the Vmware Cloud Automation Center (vCAC)
 This script is built to be run from a jenkins slave with a minmal installation in order to create an ephemeral deployement machine to deploy test and destroy the machines after testing. 
 
 HOW It WORKS
