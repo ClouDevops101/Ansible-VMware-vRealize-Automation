@@ -53,7 +53,7 @@ ansible-playbook vRA-destroy-VM.yml --ask-vault-pass
 ```
 
 ###### Input : 
-   ```json
+   ```yaml
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}
