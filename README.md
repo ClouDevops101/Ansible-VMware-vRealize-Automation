@@ -43,7 +43,7 @@ ansible-playbook vRA-deploy-VM.yml --ask-vault-pass
   VM_Destroy_id="{{ list.json.content[item].id }}" 
   VM_name="{{ list.json.content[item].name }}"  
   VM_IP="{{ list.json.content[item].resourceData }}
- ```
+  ```
 
 ## vRA-destroy-VM.yml : 
 
