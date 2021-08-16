@@ -26,12 +26,12 @@ This file is used to request a VM to vRealize Automation it will play a full mim
 Please store user and password in a separate yml vault file
 
 ### HOW to use it 
-```
+```shell
 ansible-playbook vRA-deploy-VM.yml --ask-vault-pass 
 ```
 
 ###### Input : 
-   ```
+   ```yaml
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}
@@ -39,7 +39,7 @@ ansible-playbook vRA-deploy-VM.yml --ask-vault-pass
    ```
 
 ###### Output :
-  ```
+  ```yaml
   VM_Destroy_id="{{ list.json.content[item].id }}" 
   VM_name="{{ list.json.content[item].name }}"  
   VM_IP="{{ list.json.content[item].resourceData }}
@@ -48,12 +48,12 @@ ansible-playbook vRA-deploy-VM.yml --ask-vault-pass
 ## vRA-destroy-VM.yml : 
 
 ### HOW to use it 
-```
+```shell
 ansible-playbook vRA-destroy-VM.yml --ask-vault-pass 
 ```
 
 ###### Input : 
-   ```
+   ```json
    VRA_HOST: {{ VRA_HOST}}
    VRA_USER: {{ VRA_USER }}
    VRA_PASS: {{ VRA_PASS }}
